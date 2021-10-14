@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode
 public class Task {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

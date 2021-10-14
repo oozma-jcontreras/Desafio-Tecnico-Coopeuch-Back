@@ -19,13 +19,6 @@ public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
 
-    public Task find(int id) throws DoNotExistsException {
-        Optional<Task> task = taskRepository.findById(id);
-        if(!task.isPresent())
-            throw new DoNotExistsException(String.format(TASK_DO_NOT_EXISTS_MESSAGE, id));
-        return task.get();
-    }
-
     public List<Task> findAllTasks() {
         List<Task> finalResult = new ArrayList<>();
         Iterable<Task> resultFromDataBase = taskRepository.findAll();
