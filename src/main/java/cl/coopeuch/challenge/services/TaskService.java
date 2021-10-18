@@ -7,8 +7,10 @@ import cl.coopeuch.challenge.repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -28,14 +30,17 @@ public class TaskService {
     public Task addNewTask(Task task) throws NotAllowedException {
         if(task.getId() != 0)
             throw new NotAllowedException(ID_NOT_ALLOW_MESSAGE);
+        task.setCreationDate(LocalDateTime.now());
         return taskRepository.save(task);
     }
 
     public Task updateTask(Task task) throws NotAllowedException, DoNotExistsException {
         if(task.getId() < 1)
             throw new NotAllowedException(ID_IS_MISSING_MESSAGE);
-        if(!taskRepository.findById(task.getId()).isPresent())
+        Optional<Task> actualTask = taskRepository.findById(task.getId());
+        if(!actualTask.isPresent())
             throw new DoNotExistsException(String.format(TASK_DO_NOT_EXISTS_MESSAGE, task.getId()));
+        task.setCreationDate(actualTask.get().getCreationDate());
         return taskRepository.save(task);
     }
 

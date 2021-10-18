@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
@@ -36,8 +37,9 @@ public class TaskServiceTest {
 
     @Test
     public void addTaskGivenANewTask() throws NotAllowedException {
-        when(taskRepository.save(TaskMock.getWithoutId())).thenReturn(TaskMock.getWithId());
-        assertEquals(TaskMock.getWithId(), taskService.addNewTask(TaskMock.getWithoutId()));
+        when(taskRepository.save(any(Task.class))).thenReturn(TaskMock.getWithId());
+        Task actual = taskService.addNewTask(TaskMock.getWithoutId());
+        assertEquals(TaskMock.getWithId(), actual);
     }
 
     @Test
@@ -54,7 +56,8 @@ public class TaskServiceTest {
         Optional<Task> optionalTask = Optional.of(taskWithId);
         when(taskRepository.findById(taskWithId.getId())).thenReturn(optionalTask);
         when(taskRepository.save(TaskMock.getWithId())).thenReturn(TaskMock.getWithId());
-        taskService.updateTask(taskWithId);
+        Task actual = taskService.updateTask(taskWithId);
+        assertEquals(TaskMock.getWithId(), actual);
     }
 
     @Test
