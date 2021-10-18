@@ -44,11 +44,11 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    public void removeTask(Task task) throws NotAllowedException, DoNotExistsException {
-        if(task.getId() < 1)
+    public void removeTask(int id) throws NotAllowedException, DoNotExistsException {
+        if(id < 1)
             throw new NotAllowedException(ID_IS_MISSING_MESSAGE);
-        if(!taskRepository.findById(task.getId()).isPresent())
-            throw new DoNotExistsException(String.format(TASK_DO_NOT_EXISTS_MESSAGE, task.getId()));
-        taskRepository.deleteById(task.getId());
+        if(!taskRepository.findById(id).isPresent())
+            throw new DoNotExistsException(String.format(TASK_DO_NOT_EXISTS_MESSAGE, id));
+        taskRepository.deleteById(id);
     }
 }

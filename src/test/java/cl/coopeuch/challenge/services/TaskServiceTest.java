@@ -74,13 +74,13 @@ public class TaskServiceTest {
         Optional<Task> optionalTask = Optional.of(taskWithId);
         when(taskRepository.findById(taskWithId.getId())).thenReturn(optionalTask);
         doNothing().when(taskRepository).deleteById(taskWithId.getId());
-        taskService.removeTask(taskWithId);
+        taskService.removeTask(10);
     }
 
     @Test
     public void throwNotAllowedExceptionWhenDeleteTaskWithEmptyID() throws NotAllowedException {
         NotAllowedException exception = assertThrows(NotAllowedException.class, () -> {
-            taskService.removeTask(TaskMock.getWithoutId());
+            taskService.removeTask(0);
         });
         assertNotNull(exception.getMessage());
     }

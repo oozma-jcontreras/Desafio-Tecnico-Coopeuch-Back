@@ -47,10 +47,10 @@ public class TaskController {
         }
     }
 
-    @DeleteMapping
-    public ResponseEntity<String> removeTask(@Valid @RequestBody Task task) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> removeTask(@PathVariable(value = "id") int id) {
         try {
-            taskService.removeTask(task);
+            taskService.removeTask(id);
             return new ResponseEntity<>(TASK_DELETED_MESSAGE, HttpStatus.OK);
         }
         catch (Exception exception) {
