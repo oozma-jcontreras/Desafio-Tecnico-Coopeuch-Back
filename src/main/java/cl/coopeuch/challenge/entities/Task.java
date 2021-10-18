@@ -2,6 +2,7 @@ package cl.coopeuch.challenge.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -24,7 +25,8 @@ public class Task {
     private String description;
     @Column(name = "FECHA_CREACION")
     @NotNull(message = "Debe indicar la fecha de creacion")
-    @JsonFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss.SSSSSS'Z'")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime creationDate;
     @Column(name = "ES_VIGENTE", columnDefinition = "BIT")
     @NotNull(message = "Debe indicar si es o no vigente")
